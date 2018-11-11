@@ -23,17 +23,15 @@ class MainActivity : AppCompatActivity(), BottomNavigationViewListener {
     }
 
     private fun setupFragment(fragment: Fragment) {
-        supportFragmentManager.findFragmentById(R.id.fragment_container)
-                ?: fragment.let {
-                    replaceFragmentInActivity(it, R.id.fragment_container)
-                }
+        supportFragmentManager.findFragmentById(R.id.fragment_container)    // todo [AS] supportFragmentManager.findFragmentById is always null
+                ?: replaceFragmentInActivity(fragment, R.id.fragment_container)     // by tag
     }
 
     override fun hideBottomNavigationView() {
         if (bottom_navigation.translationY == 0f)
             bottom_navigation.animate()
                     .translationY(bottom_navigation.height.toFloat())
-                    .setDuration(250)
+                    .setDuration(250)       // todo [AS] Why don't use standard system value for an animation?
                     .start()
     }
 
@@ -41,7 +39,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationViewListener {
         if (bottom_navigation.translationY >= bottom_navigation.height.toFloat())
             bottom_navigation.animate()
                     .translationY(0f)
-                    .setDuration(400)
+                    .setDuration(400)       // todo [AS] Why don't use standard system value for an animation?
                     .start()
     }
 
@@ -52,6 +50,7 @@ class MainActivity : AppCompatActivity(), BottomNavigationViewListener {
             if (fragment is OnBackPressedListener) {
                 proceedToSuper = false
                 (fragment as OnBackPressedListener).onBackPressed()
+                // todo [AS] break ?
             }
         }
         if (proceedToSuper) super.onBackPressed()
